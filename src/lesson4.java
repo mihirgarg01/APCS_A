@@ -21,5 +21,7 @@ public class lesson4 {
         salary = in.nextDouble();
 
         System.out.println(name + "\'s age is " + age + " and salary is $" + salary);
+
+        in.close();
     }
 }
