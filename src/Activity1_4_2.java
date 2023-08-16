@@ -24,7 +24,7 @@ public class Activity1_4_2 {
         String name1 = scan.next();
         String name2 = scan.next();
 
-        System.out.println(name0 + " " + name1 + " " + name2);
+        System.out.println(name2 + " " + name1 + " " + name0);
 
         scan.close();
 	}
