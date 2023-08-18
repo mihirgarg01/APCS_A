@@ -31,8 +31,9 @@ public class Activity1_4_4 {
         int num1 = (num / 10 % 10);
         int num2 = (num % 10);
 
+        System.out.println("Here are the digits:");
         System.out.println(num0 + "\n" + num1 + "\n" + num2);
-        System.out.println(num0 + " + " + num1 + " + " + num2 + " = " + (num0 + num1 + num2));
+        System.out.println("\n" + num0 + " + " + num1 + " + " + num2 + " = " + (num0 + num1 + num2));
 
         scan.close();
     }
