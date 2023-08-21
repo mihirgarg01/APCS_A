@@ -1,5 +1,5 @@
+package src;
 import java.util.Scanner;
-
 /*
 * Last name: Garg
 * First name: Mihir

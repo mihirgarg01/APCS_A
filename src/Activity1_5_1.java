@@ -1,3 +1,4 @@
+package src;
 import java.util.Scanner;
 /**
  * Last name: Garg
@@ -16,10 +17,18 @@ import java.util.Scanner;
  *
  */
 public class Activity1_5_1 {
-
 	public static void main(String[] args) {
 		//Your code goes here
+		Scanner scanner = new Scanner(System.in);
 
+		System.out.print("Input the cents: ");
+		int cents = scanner.nextInt();
+		int dollars = cents / 100;
+		int leftoverCents = cents % 100;
+
+		System.out.println("That is " + dollars + " dollars and " + leftoverCents + " cents.");
+
+		scanner.close();
 	}
 
 }
