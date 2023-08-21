@@ -1,5 +1,3 @@
-package APCS_A;
-
 /*
 * Last Name: Garg
 * First Name: Mihir
