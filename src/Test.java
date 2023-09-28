@@ -1,11 +1,10 @@
-public class Test {
-    public static void main(String[] args) {
-int num1 = 5;
+public class Test
+{
+public static void main(String[] args) {
+        String str = new String("Computer science students rock!");
+        System.out.println(str.substring(17, str.length()));
 
-int num2 = 10;
 
-double ans = num1 / num2;
-
-System.out.print(ans);
-    }
 }
+}
+
