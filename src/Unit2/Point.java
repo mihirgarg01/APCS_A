@@ -1,4 +1,4 @@
-package Unit2
+package Unit2;
 
 // A Point object represents a pair of (x, y) coordinates.
 // (Point class must be submitted with your solution; do not modify!)

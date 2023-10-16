@@ -106,7 +106,7 @@ public class CarRental {
         int one = (int) carLicencePlate.charAt(0);
         int two = (int) carLicencePlate.charAt(1);
         int three = (int) carLicencePlate.charAt(2);
-        int otherNumbres = carLicencePlate.substring(4, carLicencePlate.length());
+        // int otherNumbres = carLicencePlate.substring(4, carLicencePlate.length());
 
         return one + two + three;
     }
@@ -187,6 +187,8 @@ public class CarRental {
 		
 		c = new CarRental(make, model,lic);
 		System.out.println(c);
+
+		sc.close();
 	}
 	
 }

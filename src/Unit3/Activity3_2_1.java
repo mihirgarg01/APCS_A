@@ -58,6 +58,7 @@ public class Activity3_2_1 {
 	 */
 	public static int getMiles(int gal, int gaugeReading, int mpg) {
 		//Your code goes here
+		return mpg * gaugeReading / 100 * gal;
 	}
 	/**
 	 * Prints the number of miles the car can drive. If the number of miles is
@@ -66,6 +67,10 @@ public class Activity3_2_1 {
 	 */
 	public static void printMessage(int miles) {
 		//Your code goes here
+		System.out.println("You can go " + miles + " miles");
+		if (miles < 200) {
+		System.out.println("Get Gas!");
+		}
 	}
 	/**
 	 * Determines if a driver needs gas
@@ -73,7 +78,26 @@ public class Activity3_2_1 {
 	 */
 	public static void main(String[] args) {
 		//Your code goes here
-		
+		Scanner scan = new Scanner(System.in);
+		int tankCapacity = 0;
+		int gaugeReading = 0;
+		int milesPerGallon = 0;
+
+
+		System.out.println("Tank capacity in gallons:");
+		tankCapacity = scan.nextInt();
+
+		System.out.println("Gauge reading in percent:");
+		gaugeReading = scan.nextInt();
+
+		System.out.println("Miles per gallon:");
+		milesPerGallon = scan.nextInt();
+
+		scan.close();
+
+		// Call the meathods to check if the car needs gass
+		int miles = getMiles(tankCapacity, gaugeReading, milesPerGallon);
+		printMessage(miles);
 	}
 
 }
