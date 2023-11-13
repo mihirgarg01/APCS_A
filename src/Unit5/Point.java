@@ -25,7 +25,6 @@ public class Point {
         //Your code goes here
         x = 0;
         y = 0;
-
 	}
 
 	/**
@@ -38,7 +37,6 @@ public class Point {
         //Your code goes here
         x = newX;
         y = newY;
-
 	}
 
 	/**
@@ -51,7 +49,6 @@ public class Point {
         //Your code goes here
         x += dx;
         y += dy;
-
 	}
 
 	/**
