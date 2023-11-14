@@ -1,52 +1,57 @@
 package Semester1Project;
 
+import java.util.Scanner;
+
 public class MinesDriver {
     public static void main(String[] args) {
-        // String row5 = "|   |   |   |   |   |\n";
+        // Declare variables
+        Mines mines = new Mines();
+        Scanner scan = new Scanner(System.in);
+        boolean isPlaying = true;
 
-        // row5 = row5.substring(0, 2) + "💎" + row5.substring(2, row5.length() - 1);
+        // Welcome message
+        System.out.println("Welcome to Gems!");
+        System.out.println("You have $" + mines.getPlayerBalance());
+        System.out.println("As you get more gems (G), your winning multiplier will increase!");
+        System.out.println("But be careful, the more gems you find, the more mines (M) there will be!");
+        System.out.println("Good luck!\n");
 
-        // row5 = row5.substring(0, 6) + "💎" + row5.substring(6, row5.length() - 1);
+        while (isPlaying) {
 
-        // row5 = row5.substring(0, 18) + "💎" + row5.substring(18);
+            // Prompt the user for the x cordinate to bet
+            System.out.println("Enter the x coordinate to bet on (1-5): ");
 
-        // System.out.println(row5);
+            // Get the user's input
+            int x = scan.nextInt();
 
+            // Prompt the user for the y cordinate to bet
+            System.out.println("Enter the y coordinate to bet on (1-5): ");
+            int y = scan.nextInt();
 
-        // String newRow = "|   |   |   |   |   |\n";
-        // String row0guess = "10,2";
+            // Check if the selection is valid
+            if (!mines.isValidSelection(x, y)) {
+                System.out.println("Invalid cordinate! Must be between 1 and 5");
+                continue;
+            }
 
-        // int counter = 0;
+            // Check if the location is already guessed
+            if (mines.isAlreadyGuessed(x, y)) {
+                System.out.println("You already guessed that location!");
+                continue;
+            }
+            // Not guessed yet, check if new guess is a mine
+            else {
+                // Check if it's a mine
+                if (mines.isMine(x, y)) {
+                    System.out.println("You hit a mine! You Loose!");
+                } else {
+                    System.out.println(mines.toString());
+                }
+            }
 
-        // for (int i = 0; i < newRow.length(); i++) {
-        //     if (i == 2 || i == 6 || i == 10 || i == 14 || i == 18) {
-        //         newRow = newRow.substring(0, i + counter) + "💎" + newRow.substring(i + 1 + counter);
-        //         counter++;
-        //     }
-        // }
+        }
 
-        // System.out.println(newRow);
-
-        String aRow = "|   |   |   |   |   |\n";
-
-        int firstGuess = 10;
-        int secondGuess = 2;
-        int thirdGuess = 6;
-
-        aRow = aRow.substring(0, firstGuess) + "G" + aRow.substring(firstGuess + 1);
-
-        System.out.println(aRow);
-        
-        aRow = aRow.substring(0, secondGuess) + "G" + aRow.substring(secondGuess + 1);
-
-        System.out.println(aRow);
-
-        aRow = aRow.substring(0, thirdGuess) + "G" + aRow.substring(thirdGuess + 1);
-
-        System.out.println(aRow);
-
-        
-
-
+        // Close the scanner to avoid memory leaks
+        scan.close();
     }
 }
