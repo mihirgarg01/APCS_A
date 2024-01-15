@@ -2,23 +2,17 @@ package Semester1Project;
 
 // Import Dependencies
 import java.util.Random;
-import java.util.Scanner;
 
 /**
  * Simulate a game of Baccarat
  * Computer is dealer, player is user (console input)
  */
 public class Mines {
-    // Money Instance Variables
-    // private int betAmount = 0;
-    private int playerBalance = 100;
-    private int winningMultiplier = 1; // TODO: Make this linear, 1 gem found = 1% increase, 2 gems found = 2%
-                                       // increase, etc.
 
     // Game Control Instance Variables
     private int gemsCounter = 0;
-    private int userGuesses = 0;
-    private double mineProbability = 1;
+    private double mineProbability;
+    private double gemProbability;
     /**
      * Makeshift string array
      * "," seperates each value
@@ -31,9 +25,13 @@ public class Mines {
     private String row4Guesses = "";
     private String row5Guesses = "";
 
-    // toString row variables
-    // ----------------------111111111122222
-    // ------------0123456789012345678901234
+    /**
+     * toString row variables
+     * 5, 9, 13, 17, 21 are the vertical lines where G or M will apear
+     * ----------------------111111111122222
+     * ------------0123456789012345678901234
+     * 
+     */
     String rtop = "   +---+---+---+---+---+\n";
     String row5 = "5  |   |   |   |   |   |\n";
     String ro45 = "   +---+---+---+---+---+\n";
@@ -48,8 +46,10 @@ public class Mines {
     String rnum = "     1   2   3   4   5  \n";
 
     // Declare constants
-    private final int MINES_AMOUNT = 6; // 19 gems
+    private final int MINES_AMOUNT = 6; // 10 gems
+    private final int GEMS_AMOUNT = 10; // 5 gems
     private final int TOTAL_SQUARES = 25; // 5x5 grid
+    private final String GEM = "G";
 
     /**
      * Default Constructor
@@ -57,21 +57,9 @@ public class Mines {
     public Mines() {
         // Initialize instance variables
         // this.betAmount = 0;
-        this.playerBalance = 100;
-        this.winningMultiplier = 1;
-
         this.gemsCounter = 0;
-        this.userGuesses = 0;
-        mineProbability = (double) (MINES_AMOUNT / TOTAL_SQUARES);
-    }
-
-    /**
-     * Get the user's current balance
-     * 
-     * @return playerBalance
-     */
-    public int getPlayerBalance() {
-        return playerBalance;
+        mineProbability = (double) MINES_AMOUNT / TOTAL_SQUARES;
+        gemProbability = (double) GEMS_AMOUNT / TOTAL_SQUARES;
     }
 
     /**
@@ -79,7 +67,7 @@ public class Mines {
      * Created to avoid repetition in isAlreadyGyesed()
      * 
      * @param digit
-     * @return
+     * @return char - the ASCI character representation of the digit
      */
     private char intToChar(int digit) {
         return (char) ('0' + digit);
@@ -91,7 +79,7 @@ public class Mines {
      * 
      * @param x
      * @param y
-     * @return
+     * @return boolean - true if valid range, false otherwise
      */
     public boolean isValidSelection(int x, int y) {
         if (x >= 1 && x <= 5 && y >= 1 && y <= 5) {
@@ -183,52 +171,90 @@ public class Mines {
         Random random = new Random();
         double rand = random.nextDouble();
 
-        // Multiply randomNumber by the mine probability
-        rand *= mineProbability;
+        // System.out.println(rand);
 
         // Check if the random number is less than the mine probability
-        if (rand >= 0.5) {
+        if (rand <= mineProbability) {
             return true;
         } else {
-            updateGuesses(x, y);
-
             return false;
+        }
+    }
+
+    
+    /** 
+     * @param x
+     * @param y
+     * @return boolean
+     */
+    public boolean isGem(int x, int y) {
+
+        // Pick a random number between 0 and 1 (inclusive)
+        Random random = new Random();
+        double rand = random.nextDouble();
+
+        // System.out.println(rand);
+
+        // Check if the random number is less than the mine probability
+        if (rand <= gemProbability) {
+
+            updateGuesses(x, y, GEM);
+
+            gemsCounter++;
+            return true;
+        } else {
+
+            updateGuesses(x, y, "N");
+            return false;
+        }
+    }
+
+    public boolean isWin() {
+        System.out.println("Gems: " + gemsCounter);
+        if (gemsCounter == 5) {
+            return true;
+        } else {
+            return false;   
         }
     }
 
     /**
      * Update the row()Guesses string
+     * 
+     * @param x    x-cordinate
+     * @param y    y-cordinate
+     * @param type type of guess (mine or gem)
+     * @pre x and y are non-negative integers and are less than or equal to 5
+     * @return void - updates instance variables
      */
-    public void updateGuesses(int x, int y) {
-        // Offset by 5, grid pattern repeats by 4
+    public void updateGuesses(int x, int y, String type) {
+        // Offset by 1 (was originally 5), grid pattern repeats by 4
         int stringX = (x * 4) + 1;
 
         // Based on the y-cordinate, update the according row(y)Guesses
         if (y == 1) {
             row1Guesses += x + ",";
-            row1 = row1.substring(0, stringX) + "G" + row1.substring(stringX + 1);
+            row1 = row1.substring(0, stringX) + type + row1.substring(stringX + 1);
         } else if (y == 2) {
             row2Guesses += x + ",";
-            row2 = row2.substring(0, stringX) + "G" + row2.substring(stringX + 1);
+            row2 = row2.substring(0, stringX) + type + row2.substring(stringX + 1);
         } else if (y == 3) {
             row3Guesses += x + ",";
-            row3 = row3.substring(0, stringX) + "G" + row3.substring(stringX + 1);
+            row3 = row3.substring(0, stringX) + type + row3.substring(stringX + 1);
         } else if (y == 4) {
             row4Guesses += x + ",";
-            row4 = row4.substring(0, stringX) + "G" + row4.substring(stringX + 1);
+            row4 = row4.substring(0, stringX) + type + row4.substring(stringX + 1);
         } else if (y == 5) {
             row5Guesses += x + ",";
-            row5 = row5.substring(0, stringX) + "G" + row5.substring(stringX + 1);
+            row5 = row5.substring(0, stringX) + type + row5.substring(stringX + 1);
         }
     }
 
     /**
      * Exports the UI for the user to see
      * Using: https://ozh.github.io/ascii-tables/
-     * Each row is exactly 23 characters long (21 for table, 2 for \n)
-     * 5, 9, 13, 17, 21 are the vertical lines
      * 
-     * @return void
+     * @return String that the program prints
      */
     @Override
     public String toString() {

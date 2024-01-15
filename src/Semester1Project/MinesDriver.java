@@ -11,9 +11,8 @@ public class MinesDriver {
 
         // Welcome message
         System.out.println("Welcome to Gems!");
-        System.out.println("You have $" + mines.getPlayerBalance());
-        System.out.println("As you get more gems (G), your winning multiplier will increase!");
-        System.out.println("But be careful, the more gems you find, the more mines (M) there will be!");
+        System.out.println("The goal is to find all 5 gems without hitting a mine");
+        System.out.println("You win when you find all 5 gems");
         System.out.println("Good luck!\n");
 
         while (isPlaying) {
@@ -28,25 +27,32 @@ public class MinesDriver {
             System.out.println("Enter the y coordinate to bet on (1-5): ");
             int y = scan.nextInt();
 
-            // Check if the selection is valid
-            if (!mines.isValidSelection(x, y)) {
-                System.out.println("Invalid cordinate! Must be between 1 and 5");
+            // Check if the selection is valid or if the location is already guessed
+            if (!mines.isValidSelection(x, y) || mines.isAlreadyGuessed(x, y)) {
+                System.out.println("Invalid cordinate! (You may have already guessed that location))");
                 continue;
             }
 
-            // Check if the location is already guessed
-            if (mines.isAlreadyGuessed(x, y)) {
-                System.out.println("You already guessed that location!");
-                continue;
+            // Check if it's a mine
+            if (mines.isMine(x, y)) {
+                System.out.println("You hit a mine! You Loose!");
+                isPlaying = false;
             }
-            // Not guessed yet, check if new guess is a mine
-            else {
-                // Check if it's a mine
-                if (mines.isMine(x, y)) {
-                    System.out.println("You hit a mine! You Loose!");
-                } else {
-                    System.out.println(mines.toString());
+            // Not a mine, check if gem
+            else if (mines.isGem(x, y)) {
+                System.out.println("You found a gem!");
+                System.out.println(mines.toString());
+
+                if (mines.isWin()) {
+                    System.out.println("You win! Congradulations!");
+                    isPlaying = false;
                 }
+            }
+            // Not a mine, not a gem
+            else {
+                System.out.println("You found nothing!");
+                System.out.println(mines.toString());
+
             }
 
         }
